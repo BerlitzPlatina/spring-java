@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "handlebars.cache",
+    "type": "java.lang.String",
+    "description": "A description for 'handlebars.cache'"
+  },
+  {
+    "name": "handlebars.suffix",
+    "type": "java.lang.String",
+    "description": "A description for 'handlebars.suffix'"
+  }
+]}
