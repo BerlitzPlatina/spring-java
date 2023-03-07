@@ -1,4 +1,4 @@
-package com.example.user;
+package com.example.restservice.user;
 
 import java.util.List;
 interface UserDAL {
