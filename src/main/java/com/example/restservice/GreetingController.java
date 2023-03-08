@@ -32,7 +32,7 @@ public class GreetingController {
 	public Greeting greeting(@RequestParam(value = "name", defaultValue = "shitsss") String name) {
 		final List<String> list = new ArrayList<>();
 		MongoDatabase db = this.mongo.getMongoDatabase();
-		final MongoCollection<Document> data = client.getDatabase("admin").getCollection("users");
+		final MongoCollection<Document> data = client.getDatabase("java").getCollection("users");
 		data.find().map(Document::toJson).forEach(list::add);
 		System.out.println(list);
 		return new Greeting(list);

@@ -60,7 +60,9 @@ public class WebSecurityConfig {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeHttpRequests((authz) -> authz.anyRequest().authenticated());
+                .authorizeHttpRequests((authorize) -> authorize
+                .requestMatchers("/api/auth/**", "/api/test/**").permitAll()
+                .anyRequest().authenticated());
 
         http.authenticationProvider(authenticationProvider());
 
