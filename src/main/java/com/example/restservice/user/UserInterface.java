@@ -1,6 +1,6 @@
 package com.example.restservice.user;
 
 import java.util.List;
-interface UserDAL {
+interface UserInterface {
 	List<User> getAllUsers();
 }
