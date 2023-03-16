@@ -8,12 +8,15 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.example.security.jwt.AuthEntryPointJwt;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 import com.example.security.jwt.AuthTokenFilter;
 import com.example.security.services.UserDetailsServiceImpl;
 
@@ -56,13 +59,14 @@ public class WebSecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        http.cors(withDefaults()).csrf(CsrfConfigurer::disable)
+                .exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandler))
+                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/api/auth/**", "/api/test/**").permitAll()
-                .anyRequest().authenticated());
-                // .httpBasic();
+                .anyRequest().permitAll());
+                // .anyRequest().authenticated());
+        // .httpBasic();
 
         http.authenticationProvider(authenticationProvider());
 
